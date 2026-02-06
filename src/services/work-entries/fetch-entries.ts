@@ -5,13 +5,8 @@ interface FetchUserEntriesServiceRequest {
     userId: string
 }
 
-type SafeEntry = Omit<
-  WorkEntrie,
-  'id' | 'user_id'
->
-
 interface FetchUserEntriesServiceResponse {
-  entries: SafeEntry[]
+  entries: WorkEntrie[]
 }
 
 export class FetchUserEntriesService {
@@ -20,13 +15,7 @@ export class FetchUserEntriesService {
     async execute({ userId }: FetchUserEntriesServiceRequest): Promise<FetchUserEntriesServiceResponse> {
 
         const entries = await this.workEntriesRepository.findManyEntriesByUser(userId)
-
-        const safeEntry = entries.map(entry => ({
-            date: entry.date,
-            duration_minutes: entry.duration_minutes,
-            hourly_rate_at_time: entry.hourly_rate_at_time    
-        }))
-
-        return { entries: safeEntry }
+        
+        return { entries }
     }
 }
