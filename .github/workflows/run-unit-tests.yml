@@ -19,4 +19,5 @@ jobs:
       - run: npx prisma generate
         env:
           DATABASE_URL: "file:./dev.db"
+          JWT_SECRET: "dskjfsadfçl"
       - run: npm run test
